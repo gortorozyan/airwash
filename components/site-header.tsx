@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { assetPath } from "@/components/asset-path";
 import { ArrowUpRightIcon } from "@/components/ui-icons";
 
 type NavItem = {
@@ -111,7 +112,7 @@ export function SiteHeader() {
               className="block h-[36px] w-auto sm:h-[40px] xl:h-[44px]"
               height={1050}
               priority
-              src="/images/arpi-dron-logo-16.png"
+              src={assetPath("/images/arpi-dron-logo-16.png")}
               unoptimized
               width={6840}
             />
@@ -200,7 +201,7 @@ export function SiteHeader() {
                 alt="AirWash drone cleaning"
                 className="block h-[34px] w-auto"
                 height={1050}
-                src="/images/arpi-dron-logo-16.png"
+                src={assetPath("/images/arpi-dron-logo-16.png")}
                 unoptimized
                 width={6840}
               />

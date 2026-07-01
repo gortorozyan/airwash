@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
+import { assetPath } from "@/components/asset-path";
 
 const sectionLinks = [
   { href: "#top", label: "Գլխավոր" },
@@ -58,7 +59,7 @@ export function SiteFooter() {
                   alt="AirWash drone cleaning"
                   className="h-auto w-[142px] sm:w-[172px] lg:w-[192px]"
                   height={1384}
-                  src="/images/airwash_logo_white_transparent.png"
+                  src={assetPath("/images/airwash_logo_white_transparent.png")}
                   unoptimized
                   width={1919}
                 />

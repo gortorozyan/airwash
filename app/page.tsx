@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { ServicesSection, ServicesVideoSection } from "@/components/services-section";
 import { SiteHeader } from "@/components/site-header";
 import { AccessIcon, BuildingsIcon, SpeedIcon, WaterDropIcon } from "@/components/ui-icons";
+import { assetPath } from "@/components/asset-path";
 
 const stats = [
   {
@@ -48,7 +49,7 @@ export default function Home() {
           fill
           priority
           sizes="100vw"
-          src="/images/hero-background.png"
+          src={assetPath("/images/hero-background.png")}
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,10,18,0.22)_0%,rgba(2,10,18,0.08)_22%,rgba(2,10,18,0.1)_48%,rgba(2,10,18,0.34)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.22),transparent_34%),linear-gradient(90deg,rgba(6,14,24,0.08),rgba(6,14,24,0))]" />
@@ -136,7 +137,7 @@ export default function Home() {
                     className="object-cover"
                     fill
                     sizes="(max-width: 1024px) 100vw, 520px"
-                    src="/images/drow.jpg"
+                    src={assetPath("/images/drow.jpg")}
                   />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,17,29,0.06)_0%,rgba(5,17,29,0.2)_100%)]" />
                 </div>

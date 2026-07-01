@@ -10,6 +10,7 @@ import walletMoneyLinear from "@iconify-icons/solar/wallet-money-linear";
 import Image from "next/image";
 import type { FormEvent, KeyboardEvent } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { assetPath } from "@/components/asset-path";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/ui-icons";
 
@@ -18,56 +19,56 @@ const services = [
     title: "Ապակյա ճակատներ",
     description:
       "Drone տեխնոլոգիայով մաքրում բիզնես կենտրոնների, վիտրաժների և բարձր տեսանելի մակերեսների համար` premium վերջնական արդյունքով։",
-    image: "/images/hero-background.png",
+    image: assetPath("/images/hero-background.png"),
     imageAlt: "AirWash facade cleaning service"
   },
   {
     title: "Բարձր հասանելիություն",
     description:
       "RO/DI մաքրված ջուր, վերահսկվող workflow և արագ իրականացում այն օբյեկտների համար, որտեղ ավանդական լուծումները ավելի ռիսկային են։",
-    image: "/images/drow.jpg",
+    image: assetPath("/images/drow.jpg"),
     imageAlt: "AirWash high-access cleaning drone"
   },
   {
     title: "Բիզնես կենտրոններ",
     description:
       "Պարբերական մաքրում գրասենյակային և կոմերցիոն շենքերի համար, որպեսզի արտաքին տեսքը միշտ պահպանի ներկայացուցչական մակարդակը։",
-    image: "/images/hero-background.png",
+    image: assetPath("/images/hero-background.png"),
     imageAlt: "AirWash business center cleaning"
   },
   {
     title: "Վիտրաժների խնամք",
     description:
       "Ապակյա մակերեսների մանրակրկիտ մաքրում առանց հետքերի, երբ տեսանելիությունն ու փայլը առաջնահերթ են։",
-    image: "/images/drow.jpg",
+    image: assetPath("/images/drow.jpg"),
     imageAlt: "AirWash glass maintenance"
   },
   {
     title: "Անհատական լուծումներ",
     description:
       "Յուրաքանչյուր օբյեկտի համար կառուցում ենք առանձին մոտեցում` հաշվի առնելով բարձրությունը, ռիսկերը և սպասվող արդյունքը։",
-    image: "/images/hero-background.png",
+    image: assetPath("/images/hero-background.png"),
     imageAlt: "AirWash custom cleaning solution"
   },
   {
     title: "RO/DI վերջնական լվացում",
     description:
       "Մաքրված ջրով վերջնական անցում, որպեսզի ապակիների և premium մակերեսների վրա չմնան հետքեր կամ աղային նստվածքներ։",
-    image: "/images/drow.jpg",
+    image: assetPath("/images/drow.jpg"),
     imageAlt: "AirWash RO DI rinse"
   },
   {
     title: "Հյուրանոցային ճակատներ",
     description:
       "Բարձր տեսանելի հյուրանոցների և premium համալիրների ճակատների մաքրում` արագ սպասարկումով և ներկայացուցչական վերջնական տեսքով։",
-    image: "/images/hero-background.png",
+    image: assetPath("/images/hero-background.png"),
     imageAlt: "AirWash hotel facade cleaning"
   },
   {
     title: "Արդյունաբերական մակերեսներ",
     description:
       "Բարդ հասանելիության արտադրական և տեխնիկական մակերեսների մաքրում, երբ անվտանգությունն ու ժամանակի խնայողությունը առաջնահերթ են։",
-    image: "/images/drow.jpg",
+    image: assetPath("/images/drow.jpg"),
     imageAlt: "AirWash industrial cleaning"
   }
 ] as const;
@@ -274,7 +275,7 @@ function PackageCard({
           className="object-cover"
           fill
           sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 25vw"
-          src="/images/packages-drone-cleaning.webp"
+          src={assetPath("/images/packages-drone-cleaning.webp")}
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,14,24,0.04),rgba(6,14,24,0.24))]" />
       </div>
@@ -391,7 +392,7 @@ function ContactSection() {
         className="object-cover"
         fill
         sizes="100vw"
-        src="/images/contact-buildings.jpg"
+        src={assetPath("/images/contact-buildings.jpg")}
       />
       <div className="absolute inset-0 bg-[#06101A]/48" />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,16,26,0.58),rgba(6,16,26,0.24)_54%,rgba(6,16,26,0.58))]" />
@@ -736,7 +737,7 @@ export function ServicesSection() {
           className="object-cover"
           fill
           sizes="100vw"
-          src="/images/packages-drone-cleaning.webp"
+          src={assetPath("/images/packages-drone-cleaning.webp")}
         />
       </div>
 
@@ -883,7 +884,7 @@ export function ServicesSection() {
                 className="object-cover"
                 fill
                 sizes="(max-width: 1023px) 100vw, 336px"
-                src="/images/packages-drone-cleaning.webp"
+                src={assetPath("/images/packages-drone-cleaning.webp")}
               />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,14,24,0.02),rgba(6,14,24,0.18))]" />
             </div>
@@ -931,7 +932,7 @@ export function ServicesVideoSection() {
             playsInline
             preload="metadata"
           >
-            <source src="/videos/services-showcase.mp4" type="video/mp4" />
+            <source src={assetPath("/videos/services-showcase.mp4")} type="video/mp4" />
           </video>
           <div
             aria-hidden="true"

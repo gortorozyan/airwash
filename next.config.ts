@@ -2,8 +2,15 @@ import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 import type { NextConfig } from "next";
 
 export default function nextConfig(phase: string): NextConfig {
+  const isDevelopment = phase === PHASE_DEVELOPMENT_SERVER;
+  const basePath = isDevelopment ? "" : "/airwash";
+
   return {
-    distDir: phase === PHASE_DEVELOPMENT_SERVER ? ".next-dev" : ".next-prod",
+    basePath,
+    distDir: isDevelopment ? ".next-dev" : ".next-prod",
+    env: {
+      NEXT_PUBLIC_BASE_PATH: basePath
+    },
     images: {
       unoptimized: true
     }
