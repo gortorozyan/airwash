@@ -56,14 +56,30 @@ export function SiteHeader() {
       const headerHeight = document.querySelector("header")?.clientHeight ?? 96;
       const checkpoint = window.scrollY + headerHeight + 28;
       const sectionKeys = ["home", "why-airwash", "services", "packages", "contact"] as const;
-      let currentSection = "home";
+      const sectionPositions = sectionKeys
+        .map((sectionKey) => {
+          const sectionId = sectionKey === "home" ? "top" : sectionKey;
+          const section =
+            document.querySelector(`[data-nav-section="${sectionKey}"]`) ??
+            document.getElementById(sectionId);
 
-      sectionKeys.forEach((sectionKey) => {
-        const sectionId = sectionKey === "home" ? "top" : sectionKey;
-        const section = document.getElementById(sectionId);
+          if (!section) {
+            return null;
+          }
 
-        if (section && checkpoint >= section.offsetTop) {
-          currentSection = sectionKey;
+          return {
+            key: sectionKey,
+            top: section.getBoundingClientRect().top + window.scrollY
+          };
+        })
+        .filter((section): section is { key: (typeof sectionKeys)[number]; top: number } => section !== null)
+        .sort((firstSection, secondSection) => firstSection.top - secondSection.top);
+
+      let currentSection: (typeof sectionKeys)[number] = "home";
+
+      sectionPositions.forEach((section) => {
+        if (checkpoint >= section.top) {
+          currentSection = section.key;
         }
       });
 

@@ -732,7 +732,10 @@ export function ServicesSection() {
         </div>
       </ScrollReveal>
 
-      <div className="relative mt-14 h-[240px] w-full overflow-hidden sm:mt-20 sm:h-[360px] lg:h-[540px]">
+      <div
+        className="relative mt-14 h-[280px] w-full overflow-hidden sm:mt-20 sm:h-[420px] lg:h-[560px]"
+        data-nav-section="packages"
+      >
         <ResponsiveImage
           alt="Drone cleaning glass facade"
           className="h-full w-full object-cover"
@@ -956,7 +959,11 @@ export function ServicesVideoSection() {
   }, []);
 
   return (
-    <section className="relative h-[220px] w-full bg-[#0B141D] sm:h-[320px] lg:h-[430px]" style={sectionFont}>
+    <section
+      className="relative h-[280px] w-full bg-[#0B141D] sm:h-[420px] lg:h-[560px]"
+      data-nav-section="services"
+      style={sectionFont}
+    >
       <ScrollReveal className="h-full w-full">
         <div className="relative h-full w-full overflow-hidden">
           <video
