@@ -88,10 +88,12 @@ export function SiteHeader() {
     };
 
     document.body.style.overflow = "hidden";
+    document.body.classList.add("airwash-mobile-menu-open");
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.body.style.overflow = originalOverflow;
+      document.body.classList.remove("airwash-mobile-menu-open");
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen]);

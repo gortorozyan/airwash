@@ -119,6 +119,12 @@ a {
   stroke: none;
 }
 
+body.airwash-mobile-menu-open .airwash-scroll-top {
+  pointer-events: none !important;
+  opacity: 0 !important;
+  transform: translateY(1rem) !important;
+}
+
 .airwash-modal-backdrop {
   animation: airwash-modal-backdrop-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }

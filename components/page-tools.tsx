@@ -114,7 +114,7 @@ export function PageTools() {
   return (
     <button
       aria-label="Scroll to top"
-      className={`fixed bottom-6 right-6 z-50 inline-flex h-16 w-16 cursor-pointer items-center justify-center rounded-full border border-[#101A24] bg-[#101A24] text-white shadow-[0_18px_36px_rgba(16,26,36,0.22)] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] hover:bg-[#162736] active:scale-[0.98] ${
+      className={`airwash-scroll-top fixed bottom-6 right-6 z-50 inline-flex h-16 w-16 cursor-pointer items-center justify-center rounded-full border border-[#101A24] bg-[#101A24] text-white shadow-[0_18px_36px_rgba(16,26,36,0.22)] transition-all duration-300 hover:-translate-y-1 hover:scale-[1.03] hover:bg-[#162736] active:scale-[0.98] ${
         showScrollTop ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
       }`}
       onClick={scrollToTopWithElevatorEffect}

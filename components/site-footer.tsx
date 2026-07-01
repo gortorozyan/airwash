@@ -5,11 +5,11 @@ import { responsiveImages } from "@/components/responsive-assets";
 import { ResponsiveImage } from "@/components/responsive-image";
 
 const sectionLinks = [
-  { href: "#top", label: "Գլխավոր" },
-  { href: "#why-airwash", label: "Մեր Մասին" },
-  { href: "#services", label: "Ծառայություններ" },
-  { href: "#packages", label: "Փաթեթներ" },
-  { href: "#contact", label: "Կապ մեզ հետ" }
+  { href: "#top", label: "\u0533\u056c\u056d\u0561\u057e\u0578\u0580" },
+  { href: "#why-airwash", label: "\u0544\u0565\u0580 \u0544\u0561\u057d\u056b\u0576" },
+  { href: "#services", label: "\u053e\u0561\u057c\u0561\u0575\u0578\u0582\u0569\u0575\u0578\u0582\u0576\u0576\u0565\u0580" },
+  { href: "#packages", label: "\u0553\u0561\u0569\u0565\u0569\u0576\u0565\u0580" },
+  { href: "#contact", label: "\u053f\u0561\u057a \u0574\u0565\u0566 \u0570\u0565\u057f" }
 ] as const;
 
 const socialLinks = [
@@ -41,6 +41,12 @@ const contactItems = [
 
 const footerFont = {
   fontFamily: "-apple-system, BlinkMacSystemFont, Segoe UI, Inter, system-ui, sans-serif"
+} as const;
+
+const footerText = {
+  sections: "\u0532\u0561\u056a\u056b\u0576\u0576\u0565\u0580",
+  connect: "\u053f\u0561\u057a \u0574\u0565\u0566 \u0570\u0565\u057f",
+  rights: "\u0532\u0578\u056c\u0578\u0580 \u056b\u0580\u0561\u057e\u0578\u0582\u0576\u0584\u0576\u0565\u0580\u0568 \u057a\u0561\u0577\u057f\u057a\u0561\u0576\u057e\u0561\u056e \u0565\u0576\u0589"
 } as const;
 
 type SocialIconName = (typeof socialLinks)[number]["icon"];
@@ -122,10 +128,32 @@ function ContactIcon({ icon }: { icon: ContactIconName }) {
   );
 }
 
-export function SiteFooter() {
+function FooterSocialLinks() {
   return (
-    <footer className="relative overflow-hidden bg-[#101A24] text-white" style={footerFont}>
-      <div className="relative mx-auto max-w-[1080px] px-5 py-5 sm:px-8 sm:py-6 lg:px-10">
+    <div className="flex flex-wrap justify-center gap-2 md:justify-start">
+      {socialLinks.map((item) => (
+        <a
+          key={item.label}
+          aria-label={item.label}
+          className={`airwash-social-icon airwash-social-icon-${item.icon} inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/12 bg-white text-[#101A24] shadow-[0_8px_18px_rgba(6,14,24,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f1f5f8]`}
+          href={item.href}
+          rel="noreferrer"
+          target="_blank"
+        >
+          <SocialIcon icon={item.icon} />
+        </a>
+      ))}
+    </div>
+  );
+}
+
+export function SiteFooter() {
+  const primarySectionLinks = sectionLinks.slice(0, 3);
+  const secondarySectionLinks = sectionLinks.slice(3);
+
+  return (
+    <footer className="relative overflow-hidden bg-[#101A24] text-white md:bg-[#8f49ee]" style={footerFont}>
+      <div className="relative mx-auto max-w-[1080px] px-5 py-5 sm:px-8 sm:py-6 md:hidden">
         <div className="flex flex-col items-center text-center">
           <Link
             aria-label="AirWash home"
@@ -147,26 +175,15 @@ export function SiteFooter() {
             AIRWASH DRONE CLEANING SERVICES
           </p>
 
-          <div className="mt-3 flex flex-wrap justify-center gap-2">
-            {socialLinks.map((item) => (
-              <a
-                key={item.label}
-                aria-label={item.label}
-                className={`airwash-social-icon airwash-social-icon-${item.icon} inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/12 bg-white text-[#101A24] shadow-[0_8px_18px_rgba(6,14,24,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f1f5f8]`}
-                href={item.href}
-                rel="noreferrer"
-                target="_blank"
-              >
-                <SocialIcon icon={item.icon} />
-              </a>
-            ))}
+          <div className="mt-3">
+            <FooterSocialLinks />
           </div>
         </div>
 
         <div className="mt-5 grid gap-4 border-t border-white/10 pt-4 md:grid-cols-2 md:gap-8">
           <div className="text-center md:text-left">
             <p className="text-[13px] font-semibold text-white">
-              Բաժիններ
+              {footerText.sections}
             </p>
             <nav aria-label="Footer navigation" className="mt-2 flex flex-col items-center gap-1 md:items-start">
               {sectionLinks.map((item) => (
@@ -183,7 +200,7 @@ export function SiteFooter() {
 
           <div className="text-center md:text-left">
             <p className="text-[13px] font-semibold text-white">
-              Կապ մեզ հետ
+              {footerText.connect}
             </p>
             <div className="mt-2 flex flex-col items-center gap-1.5 md:items-start">
               {contactItems.map((item) => (
@@ -203,8 +220,92 @@ export function SiteFooter() {
         </div>
 
         <p className="mt-4 border-t border-white/10 pt-3 text-center text-[11px] text-white/52">
-          © 2026. Բոլոր իրավունքները պաշտպանված են։
+          © 2026. {footerText.rights}
         </p>
+      </div>
+
+      <div className="relative mx-auto hidden max-w-[1220px] px-8 py-10 md:grid md:grid-cols-[1.32fr_0.72fr_0.82fr_1.18fr] md:items-start md:gap-10 lg:px-10 xl:gap-14">
+        <div className="flex min-h-[205px] flex-col items-start text-left">
+          <Link
+            aria-label="AirWash home"
+            className="inline-flex transition-opacity duration-300 hover:opacity-90"
+            href="#top"
+          >
+            <ResponsiveImage
+              alt="AirWash drone cleaning"
+              className="h-auto w-[168px] lg:w-[190px]"
+              height={543}
+              imageSet={responsiveImages.footerLogo}
+              pictureClassName="block"
+              sizes="(max-width: 1023px) 168px, 190px"
+              width={768}
+            />
+          </Link>
+
+          <p className="mt-5 text-[13px] font-semibold leading-5 tracking-[0.02em] text-white">
+            AIRWASH DRONE CLEANING SERVICES
+          </p>
+          <p className="mt-4 max-w-[245px] text-[13px] leading-5 text-white/86">
+            Drone exterior cleaning services in Armenia
+          </p>
+
+          <div className="mt-4">
+            <FooterSocialLinks />
+          </div>
+
+          <p className="mt-auto pt-10 text-[12px] leading-5 text-white/82">
+            © 2026. All rights reserved.
+          </p>
+        </div>
+
+        <div className="pt-2 text-left">
+          <p className="text-[17px] font-semibold leading-6 text-white">
+            {footerText.sections}
+          </p>
+          <nav aria-label="Footer primary navigation" className="mt-6 flex flex-col items-start gap-3">
+            {primarySectionLinks.map((item) => (
+              <Link
+                key={item.href}
+                className="text-[15px] leading-5 text-white transition-opacity duration-300 hover:opacity-75"
+                href={item.href}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        <nav aria-label="Footer secondary navigation" className="flex flex-col items-start gap-3 pt-[54px] text-left">
+          {secondarySectionLinks.map((item) => (
+            <Link
+              key={item.href}
+              className="text-[15px] leading-5 text-white transition-opacity duration-300 hover:opacity-75"
+              href={item.href}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="pt-2 text-left">
+          <p className="text-[17px] font-semibold leading-6 text-white">
+            {footerText.connect}
+          </p>
+          <div className="mt-6 flex flex-col items-start gap-4">
+            {contactItems.map((item) => (
+              <a
+                key={item.label}
+                className="group inline-flex max-w-[270px] items-start gap-3 text-[13px] leading-5 text-white transition-opacity duration-300 hover:opacity-75 lg:text-[14px]"
+                href={item.href}
+              >
+                <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center text-white">
+                  <ContactIcon icon={item.icon} />
+                </span>
+                <span>{item.label}</span>
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
     </footer>
   );
