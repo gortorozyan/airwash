@@ -152,7 +152,7 @@ export function SiteFooter() {
               <a
                 key={item.label}
                 aria-label={item.label}
-                className={`airwash-social-icon airwash-social-icon-${item.icon} inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/12 bg-white text-[#2563EB] shadow-[0_8px_18px_rgba(6,14,24,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f1f5f8]`}
+                className={`airwash-social-icon airwash-social-icon-${item.icon} inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/12 bg-white text-[#101A24] shadow-[0_8px_18px_rgba(6,14,24,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f1f5f8]`}
                 href={item.href}
                 rel="noreferrer"
                 target="_blank"
@@ -168,7 +168,7 @@ export function SiteFooter() {
             <p className="text-[13px] font-semibold text-white">
               Բաժիններ
             </p>
-            <nav aria-label="Footer navigation" className="mt-2 flex flex-wrap justify-center gap-x-4 gap-y-1 md:justify-start">
+            <nav aria-label="Footer navigation" className="mt-2 flex flex-col items-center gap-1 md:items-start">
               {sectionLinks.map((item) => (
                 <Link
                   key={item.href}
