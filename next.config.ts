@@ -7,7 +7,8 @@ export default function nextConfig(phase: string): NextConfig {
 
   return {
     basePath,
-    distDir: isDevelopment ? ".next-dev" : ".next-prod",
+    distDir: isDevelopment ? ".next-dev" : undefined,
+    output: isDevelopment ? undefined : "export",
     env: {
       NEXT_PUBLIC_BASE_PATH: basePath
     },
