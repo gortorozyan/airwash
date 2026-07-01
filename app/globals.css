@@ -101,6 +101,24 @@ a {
   color: #101A24 !important;
 }
 
+.airwash-social-icon svg {
+  display: block;
+  color: currentColor;
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+.airwash-social-icon-instagram svg,
+.airwash-social-icon .h-4 {
+  fill: none;
+}
+
+.airwash-social-icon-tiktok svg {
+  color: #101A24;
+  fill: #101A24;
+  stroke: none;
+}
+
 .airwash-modal-backdrop {
   animation: airwash-modal-backdrop-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
