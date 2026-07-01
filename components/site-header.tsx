@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { assetPath } from "@/components/asset-path";
+import { responsiveImages } from "@/components/responsive-assets";
+import { ResponsiveImage } from "@/components/responsive-image";
 import { ArrowUpRightIcon } from "@/components/ui-icons";
 
 type NavItem = {
@@ -107,14 +107,16 @@ export function SiteHeader() {
             className="shrink-0 transition-opacity duration-300 hover:opacity-90"
             href="#top"
           >
-            <Image
+            <ResponsiveImage
               alt="AirWash drone cleaning"
               className="block h-[36px] w-auto sm:h-[40px] xl:h-[44px]"
-              height={1050}
-              priority
-              src={assetPath("/images/arpi-dron-logo-16.png")}
-              unoptimized
-              width={6840}
+              fetchPriority="high"
+              height={147}
+              imageSet={responsiveImages.headerLogo}
+              loading="eager"
+              pictureClassName="block"
+              sizes="(max-width: 1279px) 140px, 190px"
+              width={960}
             />
           </Link>
         </div>
@@ -197,13 +199,14 @@ export function SiteHeader() {
               href="#top"
               onClick={() => setIsOpen(false)}
             >
-              <Image
+              <ResponsiveImage
                 alt="AirWash drone cleaning"
                 className="block h-[34px] w-auto"
-                height={1050}
-                src={assetPath("/images/arpi-dron-logo-16.png")}
-                unoptimized
-                width={6840}
+                height={147}
+                imageSet={responsiveImages.headerLogo}
+                pictureClassName="block"
+                sizes="140px"
+                width={960}
               />
             </Link>
             <button

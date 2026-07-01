@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { AutoFlipCard } from "@/components/auto-flip-card";
 import { PageTools } from "@/components/page-tools";
 import { ScrollReveal } from "@/components/scroll-reveal";
@@ -7,7 +6,8 @@ import { SiteFooter } from "@/components/site-footer";
 import { ServicesSection, ServicesVideoSection } from "@/components/services-section";
 import { SiteHeader } from "@/components/site-header";
 import { AccessIcon, BuildingsIcon, SpeedIcon, WaterDropIcon } from "@/components/ui-icons";
-import { assetPath } from "@/components/asset-path";
+import { responsiveImages } from "@/components/responsive-assets";
+import { ResponsiveImage } from "@/components/responsive-image";
 
 const stats = [
   {
@@ -42,19 +42,20 @@ export default function Home() {
       <SiteHeader />
       <PageTools />
 
-      <section className="relative min-h-[720px] overflow-hidden bg-[#08131e] sm:min-h-screen">
-        <Image
+      <section className="relative min-h-[640px] overflow-hidden bg-[#08131e] sm:min-h-[760px] lg:min-h-screen">
+        <ResponsiveImage
           alt="AirWash drone cleaning background"
-          className="object-cover object-center"
-          fill
-          priority
+          className="h-full w-full object-cover object-center"
+          fetchPriority="high"
+          imageSet={responsiveImages.hero}
+          loading="eager"
+          pictureClassName="absolute inset-0 block"
           sizes="100vw"
-          src={assetPath("/images/hero-background.png")}
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,10,18,0.22)_0%,rgba(2,10,18,0.08)_22%,rgba(2,10,18,0.1)_48%,rgba(2,10,18,0.34)_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.22),transparent_34%),linear-gradient(90deg,rgba(6,14,24,0.08),rgba(6,14,24,0))]" />
 
-        <div className="relative z-10 flex min-h-[720px] w-full flex-col px-5 pt-0 sm:min-h-screen sm:px-8 lg:px-10 xl:px-12">
+        <div className="relative z-10 flex min-h-[640px] w-full flex-col px-5 pt-0 sm:min-h-[760px] sm:px-8 lg:min-h-screen lg:px-10 xl:px-12">
           <div aria-hidden="true" className="h-[74px] sm:h-[88px] lg:h-[94px]" />
           <HeroSection />
         </div>
@@ -132,12 +133,12 @@ export default function Home() {
             <AutoFlipCard className="mx-auto w-full max-w-[420px] sm:max-w-[520px]">
               <div className="flip-card-inner relative aspect-[1.12] w-full">
                 <div className="flip-card-face absolute inset-0 overflow-hidden rounded-[28px]">
-                  <Image
+                  <ResponsiveImage
                     alt="AirWash drone cleaning showcase"
-                    className="object-cover"
-                    fill
+                    className="h-full w-full object-cover"
+                    imageSet={responsiveImages.drone}
+                    pictureClassName="absolute inset-0 block"
                     sizes="(max-width: 1024px) 100vw, 520px"
-                    src={assetPath("/images/drow.jpg")}
                   />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,17,29,0.06)_0%,rgba(5,17,29,0.2)_100%)]" />
                 </div>

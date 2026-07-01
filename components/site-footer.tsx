@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
-import { assetPath } from "@/components/asset-path";
+import { responsiveImages } from "@/components/responsive-assets";
+import { ResponsiveImage } from "@/components/responsive-image";
 
 const sectionLinks = [
   { href: "#top", label: "Գլխավոր" },
@@ -55,13 +55,14 @@ export function SiteFooter() {
                 className="inline-flex w-full justify-center transition-opacity duration-300 hover:opacity-90"
                 href="#top"
               >
-                <Image
+                <ResponsiveImage
                   alt="AirWash drone cleaning"
                   className="h-auto w-[142px] sm:w-[172px] lg:w-[192px]"
-                  height={1384}
-                  src={assetPath("/images/airwash_logo_white_transparent.png")}
-                  unoptimized
-                  width={1919}
+                  height={543}
+                  imageSet={responsiveImages.footerLogo}
+                  pictureClassName="block"
+                  sizes="(max-width: 639px) 142px, (max-width: 1023px) 172px, 192px"
+                  width={768}
                 />
               </Link>
 

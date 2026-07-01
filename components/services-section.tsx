@@ -7,10 +7,11 @@ import lightbulbBoltLinear from "@iconify-icons/solar/lightbulb-bolt-linear";
 import shieldCheckLinear from "@iconify-icons/solar/shield-check-linear";
 import starsLineLinear from "@iconify-icons/solar/stars-line-linear";
 import walletMoneyLinear from "@iconify-icons/solar/wallet-money-linear";
-import Image from "next/image";
 import type { FormEvent, KeyboardEvent } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { assetPath } from "@/components/asset-path";
+import { responsiveImages } from "@/components/responsive-assets";
+import { ResponsiveImage } from "@/components/responsive-image";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/ui-icons";
 
@@ -19,56 +20,56 @@ const services = [
     title: "Ապակյա ճակատներ",
     description:
       "Drone տեխնոլոգիայով մաքրում բիզնես կենտրոնների, վիտրաժների և բարձր տեսանելի մակերեսների համար` premium վերջնական արդյունքով։",
-    image: assetPath("/images/hero-background.png"),
+    image: responsiveImages.hero,
     imageAlt: "AirWash facade cleaning service"
   },
   {
     title: "Բարձր հասանելիություն",
     description:
       "RO/DI մաքրված ջուր, վերահսկվող workflow և արագ իրականացում այն օբյեկտների համար, որտեղ ավանդական լուծումները ավելի ռիսկային են։",
-    image: assetPath("/images/drow.jpg"),
+    image: responsiveImages.drone,
     imageAlt: "AirWash high-access cleaning drone"
   },
   {
     title: "Բիզնես կենտրոններ",
     description:
       "Պարբերական մաքրում գրասենյակային և կոմերցիոն շենքերի համար, որպեսզի արտաքին տեսքը միշտ պահպանի ներկայացուցչական մակարդակը։",
-    image: assetPath("/images/hero-background.png"),
+    image: responsiveImages.hero,
     imageAlt: "AirWash business center cleaning"
   },
   {
     title: "Վիտրաժների խնամք",
     description:
       "Ապակյա մակերեսների մանրակրկիտ մաքրում առանց հետքերի, երբ տեսանելիությունն ու փայլը առաջնահերթ են։",
-    image: assetPath("/images/drow.jpg"),
+    image: responsiveImages.drone,
     imageAlt: "AirWash glass maintenance"
   },
   {
     title: "Անհատական լուծումներ",
     description:
       "Յուրաքանչյուր օբյեկտի համար կառուցում ենք առանձին մոտեցում` հաշվի առնելով բարձրությունը, ռիսկերը և սպասվող արդյունքը։",
-    image: assetPath("/images/hero-background.png"),
+    image: responsiveImages.hero,
     imageAlt: "AirWash custom cleaning solution"
   },
   {
     title: "RO/DI վերջնական լվացում",
     description:
       "Մաքրված ջրով վերջնական անցում, որպեսզի ապակիների և premium մակերեսների վրա չմնան հետքեր կամ աղային նստվածքներ։",
-    image: assetPath("/images/drow.jpg"),
+    image: responsiveImages.drone,
     imageAlt: "AirWash RO DI rinse"
   },
   {
     title: "Հյուրանոցային ճակատներ",
     description:
       "Բարձր տեսանելի հյուրանոցների և premium համալիրների ճակատների մաքրում` արագ սպասարկումով և ներկայացուցչական վերջնական տեսքով։",
-    image: assetPath("/images/hero-background.png"),
+    image: responsiveImages.hero,
     imageAlt: "AirWash hotel facade cleaning"
   },
   {
     title: "Արդյունաբերական մակերեսներ",
     description:
       "Բարդ հասանելիության արտադրական և տեխնիկական մակերեսների մաքրում, երբ անվտանգությունն ու ժամանակի խնայողությունը առաջնահերթ են։",
-    image: assetPath("/images/drow.jpg"),
+    image: responsiveImages.drone,
     imageAlt: "AirWash industrial cleaning"
   }
 ] as const;
@@ -210,12 +211,12 @@ function ServiceCard({
           <div
             className="relative min-h-[190px] min-w-0 sm:min-h-[220px] md:h-full md:min-h-0"
           >
-            <Image
+            <ResponsiveImage
               alt={service.imageAlt}
-              className="object-cover"
-              fill
+              className="h-full w-full object-cover"
+              imageSet={service.image}
+              pictureClassName="absolute inset-0 block"
               sizes="(max-width: 767px) 100vw, (max-width: 1279px) 40vw, 28vw"
-              src={service.image}
             />
           </div>
 
@@ -270,12 +271,12 @@ function PackageCard({
       tabIndex={0}
     >
       <div className="relative min-h-[190px] sm:min-h-[220px]">
-        <Image
+        <ResponsiveImage
           alt={card.title}
-          className="object-cover"
-          fill
+          className="h-full w-full object-cover"
+          imageSet={responsiveImages.packages}
+          pictureClassName="absolute inset-0 block"
           sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 25vw"
-          src={assetPath("/images/packages-drone-cleaning.webp")}
         />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,14,24,0.04),rgba(6,14,24,0.24))]" />
       </div>
@@ -387,12 +388,12 @@ function ContactSection() {
 
   return (
     <section className="relative overflow-hidden px-5 py-14 text-white sm:px-8 sm:py-16 lg:px-10 lg:py-20 xl:px-12" id="contact">
-      <Image
+      <ResponsiveImage
         alt="Glass buildings contact background"
-        className="object-cover"
-        fill
+        className="h-full w-full object-cover"
+        imageSet={responsiveImages.contact}
+        pictureClassName="absolute inset-0 block"
         sizes="100vw"
-        src={assetPath("/images/contact-buildings.jpg")}
       />
       <div className="absolute inset-0 bg-[#06101A]/48" />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(6,16,26,0.58),rgba(6,16,26,0.24)_54%,rgba(6,16,26,0.58))]" />
@@ -732,12 +733,12 @@ export function ServicesSection() {
       </ScrollReveal>
 
       <div className="relative mt-14 h-[240px] w-full overflow-hidden sm:mt-20 sm:h-[360px] lg:h-[540px]">
-        <Image
+        <ResponsiveImage
           alt="Drone cleaning glass facade"
-          className="object-cover"
-          fill
+          className="h-full w-full object-cover"
+          imageSet={responsiveImages.packages}
+          pictureClassName="absolute inset-0 block"
           sizes="100vw"
-          src={assetPath("/images/packages-drone-cleaning.webp")}
         />
       </div>
 
@@ -817,12 +818,12 @@ export function ServicesSection() {
                 isModalImageExpanded ? "lg:rounded-r-[5px]" : "lg:rounded-r-none"
               }`}
             >
-              <Image
+              <ResponsiveImage
                 alt={selectedService.imageAlt}
-                className="object-cover"
-                fill
+                className="h-full w-full object-cover"
+                imageSet={selectedService.image}
+                pictureClassName="absolute inset-0 block"
                 sizes="(max-width: 1023px) 100vw, 336px"
-                src={selectedService.image}
               />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,14,24,0.02),rgba(6,14,24,0.18))]" />
             </div>
@@ -879,12 +880,12 @@ export function ServicesSection() {
             </button>
 
             <div className="relative min-h-0 overflow-hidden rounded-t-[5px] lg:h-full lg:min-h-0 lg:rounded-l-[5px] lg:rounded-r-none lg:rounded-tr-none">
-              <Image
+              <ResponsiveImage
                 alt={selectedPackage.title}
-                className="object-cover"
-                fill
+                className="h-full w-full object-cover"
+                imageSet={responsiveImages.packages}
+                pictureClassName="absolute inset-0 block"
                 sizes="(max-width: 1023px) 100vw, 336px"
-                src={assetPath("/images/packages-drone-cleaning.webp")}
               />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,14,24,0.02),rgba(6,14,24,0.18))]" />
             </div>
@@ -920,17 +921,52 @@ export function ServicesSection() {
 }
 
 export function ServicesVideoSection() {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+
+    if (!video) {
+      return;
+    }
+
+    const startVideo = () => {
+      video.load();
+      void video.play();
+    };
+
+    if (typeof IntersectionObserver === "undefined") {
+      startVideo();
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          startVideo();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "220px 0px" }
+    );
+
+    observer.observe(video);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="relative h-[220px] w-full bg-[#0B141D] sm:h-[320px] lg:h-[430px]" style={sectionFont}>
       <ScrollReveal className="h-full w-full">
         <div className="relative h-full w-full overflow-hidden">
           <video
-            autoPlay
             className="h-full w-full object-cover"
             loop
             muted
             playsInline
-            preload="metadata"
+            poster={assetPath("/images/optimized/packages-drone-cleaning-1280.webp")}
+            preload="none"
+            ref={videoRef}
           >
             <source src={assetPath("/videos/services-showcase.mp4")} type="video/mp4" />
           </video>
