@@ -125,7 +125,7 @@ function ContactIcon({ icon }: { icon: ContactIconName }) {
 export function SiteFooter() {
   return (
     <footer className="relative overflow-hidden bg-[#101A24] text-white" style={footerFont}>
-      <div className="relative mx-auto max-w-[1180px] px-5 py-8 sm:px-8 sm:py-9 lg:px-10">
+      <div className="relative mx-auto max-w-[1080px] px-5 py-5 sm:px-8 sm:py-6 lg:px-10">
         <div className="flex flex-col items-center text-center">
           <Link
             aria-label="AirWash home"
@@ -134,25 +134,25 @@ export function SiteFooter() {
           >
             <ResponsiveImage
               alt="AirWash drone cleaning"
-              className="h-auto w-[118px] sm:w-[138px]"
+              className="h-auto w-[98px] sm:w-[112px]"
               height={543}
               imageSet={responsiveImages.footerLogo}
               pictureClassName="block"
-              sizes="(max-width: 639px) 118px, 138px"
+              sizes="(max-width: 639px) 98px, 112px"
               width={768}
             />
           </Link>
 
-          <p className="mt-3 text-[12px] font-semibold tracking-[0.08em] text-white/78 sm:text-[13px]">
+          <p className="mt-2 text-[11px] font-semibold tracking-[0.08em] text-white/72 sm:text-[12px]">
             AIRWASH DRONE CLEANING SERVICES
           </p>
 
-          <div className="mt-4 flex flex-wrap justify-center gap-2.5">
+          <div className="mt-3 flex flex-wrap justify-center gap-2">
             {socialLinks.map((item) => (
               <a
                 key={item.label}
                 aria-label={item.label}
-                className={`airwash-social-icon airwash-social-icon-${item.icon} inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/14 bg-white text-[#101A24] shadow-[0_10px_24px_rgba(6,14,24,0.14)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f1f5f8]`}
+                className={`airwash-social-icon airwash-social-icon-${item.icon} inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/12 bg-white text-[#2563EB] shadow-[0_8px_18px_rgba(6,14,24,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f1f5f8]`}
                 href={item.href}
                 rel="noreferrer"
                 target="_blank"
@@ -163,16 +163,16 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-7 grid gap-7 border-t border-white/10 pt-6 md:grid-cols-2 md:gap-10">
+        <div className="mt-5 grid gap-4 border-t border-white/10 pt-4 md:grid-cols-2 md:gap-8">
           <div className="text-center md:text-left">
-            <p className="text-[14px] font-semibold text-white">
+            <p className="text-[13px] font-semibold text-white">
               Բաժիններ
             </p>
-            <nav aria-label="Footer navigation" className="mt-3 flex flex-wrap justify-center gap-x-5 gap-y-2 md:justify-start">
+            <nav aria-label="Footer navigation" className="mt-2 flex flex-wrap justify-center gap-x-4 gap-y-1 md:justify-start">
               {sectionLinks.map((item) => (
                 <Link
                   key={item.href}
-                  className="text-[14px] leading-6 text-white/72 transition-colors duration-300 hover:text-white"
+                  className="text-[13px] leading-5 text-white/70 transition-colors duration-300 hover:text-white"
                   href={item.href}
                 >
                   {item.label}
@@ -182,17 +182,17 @@ export function SiteFooter() {
           </div>
 
           <div className="text-center md:text-left">
-            <p className="text-[14px] font-semibold text-white">
+            <p className="text-[13px] font-semibold text-white">
               Կապ մեզ հետ
             </p>
-            <div className="mt-3 flex flex-col items-center gap-2.5 md:items-start">
+            <div className="mt-2 flex flex-col items-center gap-1.5 md:items-start">
               {contactItems.map((item) => (
                 <a
                   key={item.label}
-                  className="group inline-flex items-center gap-2.5 text-[14px] leading-6 text-white/72 transition-colors duration-300 hover:text-white"
+                  className="group inline-flex items-center gap-2 text-[13px] leading-5 text-white/70 transition-colors duration-300 hover:text-white"
                   href={item.href}
                 >
-                  <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/12 text-white">
+                  <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/12 text-white">
                     <ContactIcon icon={item.icon} />
                   </span>
                   <span>{item.label}</span>
@@ -202,7 +202,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <p className="mt-6 border-t border-white/10 pt-5 text-center text-[12px] text-white/56">
+        <p className="mt-4 border-t border-white/10 pt-3 text-center text-[11px] text-white/52">
           © 2026. Բոլոր իրավունքները պաշտպանված են։
         </p>
       </div>

@@ -103,9 +103,9 @@ a {
 
 .airwash-social-icon svg {
   display: block;
-  color: currentColor;
-  fill: currentColor;
-  stroke: currentColor;
+  color: #2563EB;
+  fill: #2563EB;
+  stroke: #2563EB;
 }
 
 .airwash-social-icon-instagram svg,
@@ -114,8 +114,8 @@ a {
 }
 
 .airwash-social-icon-tiktok svg {
-  color: #101A24;
-  fill: #101A24;
+  color: #2563EB;
+  fill: #2563EB;
   stroke: none;
 }
 
