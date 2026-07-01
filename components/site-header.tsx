@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { type MouseEvent, useEffect, useRef, useState } from "react";
 import { responsiveImages } from "@/components/responsive-assets";
 import { ResponsiveImage } from "@/components/responsive-image";
 import { ArrowUpRightIcon } from "@/components/ui-icons";
@@ -49,6 +49,7 @@ export function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [hoveredHref, setHoveredHref] = useState<string | null>(null);
+  const navAnimationFrameRef = useRef<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -98,6 +99,78 @@ export function SiteHeader() {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    return () => {
+      if (navAnimationFrameRef.current !== null) {
+        window.cancelAnimationFrame(navAnimationFrameRef.current);
+      }
+    };
+  }, []);
+
+  const scrollToSection = (href: string) => {
+    const sectionId = href === "#top" ? "top" : href.replace("#", "");
+    const section = document.getElementById(sectionId);
+
+    if (!section) {
+      return;
+    }
+
+    if (navAnimationFrameRef.current !== null) {
+      window.cancelAnimationFrame(navAnimationFrameRef.current);
+    }
+
+    const headerHeight = document.querySelector("header")?.clientHeight ?? 0;
+    const targetY = sectionId === "top"
+      ? 0
+      : Math.max(section.getBoundingClientRect().top + window.scrollY - headerHeight + 1, 0);
+    const startY = window.scrollY;
+    const distance = targetY - startY;
+    const startTime = performance.now();
+    const duration = 950;
+
+    const easeInOutCubic = (progress: number) => {
+      if (progress < 0.5) {
+        return 4 * progress * progress * progress;
+      }
+
+      return 1 - Math.pow(-2 * progress + 2, 3) / 2;
+    };
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeInOutCubic(progress);
+
+      window.scrollTo({
+        top: Math.max(startY + (distance * easedProgress), 0),
+        left: 0,
+        behavior: "auto"
+      });
+
+      if (progress < 1) {
+        navAnimationFrameRef.current = window.requestAnimationFrame(animate);
+        return;
+      }
+
+      navAnimationFrameRef.current = null;
+      window.history.replaceState(null, "", href);
+    };
+
+    navAnimationFrameRef.current = window.requestAnimationFrame(animate);
+  };
+
+  const handleAnchorClick = (event: MouseEvent<HTMLAnchorElement>, href: string, closeMenu = false) => {
+    event.preventDefault();
+
+    if (closeMenu) {
+      setIsOpen(false);
+      window.requestAnimationFrame(() => scrollToSection(href));
+      return;
+    }
+
+    scrollToSection(href);
+  };
+
   return (
     <header
       className="fixed inset-x-0 top-0 z-40 w-full bg-[#101A24] px-5 py-4 text-white shadow-[0_6px_20px_rgba(6,14,24,0.18)] transition-[background-color,box-shadow] duration-300 sm:px-8 sm:py-4 lg:px-10 xl:px-12"
@@ -108,6 +181,7 @@ export function SiteHeader() {
             aria-label="AirWash home"
             className="shrink-0 transition-opacity duration-300 hover:opacity-90"
             href="#top"
+            onClick={(event) => handleAnchorClick(event, "#top")}
           >
             <ResponsiveImage
               alt="AirWash drone cleaning"
@@ -141,6 +215,7 @@ export function SiteHeader() {
                 }`}
                 href={item.href}
                 onMouseEnter={() => setHoveredHref(item.href)}
+                onClick={(event) => handleAnchorClick(event, item.href)}
                 style={{ color: "#FFFFFF" }}
               >
                 {item.label}
@@ -161,6 +236,7 @@ export function SiteHeader() {
           <Link
             className="airwash-header-cta group inline-flex h-[40px] items-center gap-2 whitespace-nowrap rounded-[5px] border border-white/24 bg-transparent px-4 text-[12px] font-medium text-white shadow-[0_10px_28px_rgba(6,14,24,0.12)] backdrop-blur-md transition-colors duration-300 hover:border-white hover:bg-white hover:text-[#101A24]"
             href="#contact"
+            onClick={(event) => handleAnchorClick(event, "#contact")}
           >
             {"\u054d\u057f\u0561\u0576\u0561\u056c \u0563\u0576\u0561\u0570\u0561\u057f\u0578\u0582\u0574"}
             <ArrowUpRightIcon className="h-4 w-4 text-white transition-colors duration-300 group-hover:text-[#101A24]" />
@@ -199,7 +275,7 @@ export function SiteHeader() {
               aria-label="AirWash home"
               className="inline-flex shrink-0 transition-opacity duration-300 hover:opacity-90"
               href="#top"
-              onClick={() => setIsOpen(false)}
+              onClick={(event) => handleAnchorClick(event, "#top", true)}
             >
               <ResponsiveImage
                 alt="AirWash drone cleaning"
@@ -231,7 +307,7 @@ export function SiteHeader() {
                     : "text-white/74 hover:text-white"
                 }`}
                 href={item.href}
-                onClick={() => setIsOpen(false)}
+                onClick={(event) => handleAnchorClick(event, item.href, true)}
                 style={{ color: "#FFFFFF" }}
               >
                 {item.label}
@@ -243,7 +319,7 @@ export function SiteHeader() {
             <Link
               className="airwash-header-cta group inline-flex h-12 w-full items-center justify-center gap-3 rounded-[5px] border border-white/24 bg-transparent px-4 text-sm font-semibold text-white transition-colors duration-300 hover:border-white hover:bg-white hover:text-[#101A24]"
               href="#contact"
-              onClick={() => setIsOpen(false)}
+              onClick={(event) => handleAnchorClick(event, "#contact", true)}
             >
               {"\u054d\u057f\u0561\u0576\u0561\u056c \u0563\u0576\u0561\u0570\u0561\u057f\u0578\u0582\u0574"}
               <ArrowUpRightIcon className="h-5 w-5 text-white transition-colors duration-300 group-hover:text-[#101A24]" />

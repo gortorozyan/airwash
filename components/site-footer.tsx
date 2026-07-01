@@ -46,6 +46,7 @@ const footerFont = {
 const footerText = {
   sections: "\u0532\u0561\u056a\u056b\u0576\u0576\u0565\u0580",
   connect: "\u053f\u0561\u057a \u0574\u0565\u0566 \u0570\u0565\u057f",
+  estimate: "\u054d\u057f\u0561\u0576\u0561\u056c \u0563\u0576\u0561\u0570\u0561\u057f\u0578\u0582\u0574",
   rights: "\u0532\u0578\u056c\u0578\u0580 \u056b\u0580\u0561\u057e\u0578\u0582\u0576\u0584\u0576\u0565\u0580\u0568 \u057a\u0561\u0577\u057f\u057a\u0561\u0576\u057e\u0561\u056e \u0565\u0576\u0589"
 } as const;
 
@@ -148,11 +149,15 @@ function FooterSocialLinks() {
 }
 
 export function SiteFooter() {
-  const primarySectionLinks = sectionLinks.slice(0, 3);
-  const secondarySectionLinks = sectionLinks.slice(3);
+  const footerSectionLinks = [
+    ...sectionLinks,
+    { href: "#contact", label: footerText.estimate }
+  ] as const;
+  const primarySectionLinks = footerSectionLinks.slice(0, 3);
+  const secondarySectionLinks = footerSectionLinks.slice(3);
 
   return (
-    <footer className="relative overflow-hidden bg-[#101A24] text-white md:bg-[#8f49ee]" style={footerFont}>
+    <footer className="relative overflow-hidden bg-[#101A24] text-white" style={footerFont}>
       <div className="relative mx-auto max-w-[1080px] px-5 py-5 sm:px-8 sm:py-6 md:hidden">
         <div className="flex flex-col items-center text-center">
           <Link
@@ -186,9 +191,9 @@ export function SiteFooter() {
               {footerText.sections}
             </p>
             <nav aria-label="Footer navigation" className="mt-2 flex flex-col items-center gap-1 md:items-start">
-              {sectionLinks.map((item) => (
+              {footerSectionLinks.map((item) => (
                 <Link
-                  key={item.href}
+                  key={`${item.href}-${item.label}`}
                   className="text-[13px] leading-5 text-white/70 transition-colors duration-300 hover:text-white"
                   href={item.href}
                 >
@@ -224,7 +229,7 @@ export function SiteFooter() {
         </p>
       </div>
 
-      <div className="relative mx-auto hidden max-w-[1220px] px-8 py-10 md:grid md:grid-cols-[1.32fr_0.72fr_0.82fr_1.18fr] md:items-start md:gap-10 lg:px-10 xl:gap-14">
+      <div className="relative mx-auto hidden max-w-[1180px] px-8 py-9 md:grid md:grid-cols-[1.18fr_0.78fr_0.78fr_1.18fr] md:items-start md:gap-8 lg:px-10 lg:py-10 xl:gap-12">
         <div className="flex min-h-[205px] flex-col items-start text-left">
           <Link
             aria-label="AirWash home"
@@ -258,7 +263,7 @@ export function SiteFooter() {
           </p>
         </div>
 
-        <div className="pt-2 text-left">
+        <div className="justify-self-center pt-2 text-left">
           <p className="text-[17px] font-semibold leading-6 text-white">
             {footerText.sections}
           </p>
@@ -275,10 +280,10 @@ export function SiteFooter() {
           </nav>
         </div>
 
-        <nav aria-label="Footer secondary navigation" className="flex flex-col items-start gap-3 pt-[54px] text-left">
+        <nav aria-label="Footer secondary navigation" className="flex flex-col items-start gap-3 justify-self-center pt-[54px] text-left">
           {secondarySectionLinks.map((item) => (
             <Link
-              key={item.href}
+              key={`${item.href}-${item.label}`}
               className="text-[15px] leading-5 text-white transition-opacity duration-300 hover:opacity-75"
               href={item.href}
             >
@@ -287,7 +292,7 @@ export function SiteFooter() {
           ))}
         </nav>
 
-        <div className="pt-2 text-left">
+        <div className="justify-self-end pt-2 text-left">
           <p className="text-[17px] font-semibold leading-6 text-white">
             {footerText.connect}
           </p>

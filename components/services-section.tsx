@@ -294,7 +294,7 @@ function PackageCard({
 }
 
 function FaqSection() {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <section className="bg-[#101A24] px-5 py-14 text-white sm:px-8 sm:py-16 lg:px-10 lg:py-20 xl:px-12">
