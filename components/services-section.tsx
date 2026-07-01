@@ -168,6 +168,7 @@ type Service = (typeof services)[number];
 type PackageCardItem = (typeof packageCards)[number];
 const CARD_GAP = 24;
 const EDGE_GUTTER_RATIO = 0.08;
+const MOBILE_CARD_GUTTER = 20;
 
 function ServiceCard({
   service,
@@ -581,8 +582,12 @@ export function ServicesSection() {
       }
 
       const viewportWidth = viewport.getBoundingClientRect().width;
-      const nextEdgeOffset = viewportWidth * EDGE_GUTTER_RATIO;
-      const nextCardWidth = (viewportWidth - nextEdgeOffset - (CARD_GAP * (cardsPerView - 1))) / cardsPerView;
+      const nextEdgeOffset = cardsPerView === 1
+        ? MOBILE_CARD_GUTTER
+        : viewportWidth * EDGE_GUTTER_RATIO;
+      const nextCardWidth = cardsPerView === 1
+        ? viewportWidth - (nextEdgeOffset * 2)
+        : (viewportWidth - nextEdgeOffset - (CARD_GAP * (cardsPerView - 1))) / cardsPerView;
 
       setCardWidth(nextCardWidth);
       setStepWidth(nextCardWidth + CARD_GAP);
@@ -653,10 +658,7 @@ export function ServicesSection() {
     };
   }, [closePackageModal, closeServiceModal, selectedPackage, selectedService]);
 
-  const currentTranslate =
-    activeIndex === 0
-      ? 0
-      : edgeOffset + (activeIndex * stepWidth);
+  const currentTranslate = activeIndex * stepWidth;
 
   const trackStyle = {
     transform: `translate3d(-${currentTranslate}px, 0, 0)`
@@ -682,7 +684,7 @@ export function ServicesSection() {
         <div className="relative mt-10 w-full sm:mt-14">
           <button
             aria-label="Previous services"
-            className="absolute left-[5%] top-1/2 z-20 inline-flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-[#101A24]/18 bg-white text-[#101A24] shadow-[0_12px_26px_rgba(6,14,24,0.12)] transition-all duration-300 hover:-translate-x-[56%] hover:-translate-y-1/2 hover:scale-[1.04] hover:bg-white active:scale-[0.98] disabled:cursor-not-allowed disabled:border-[#101A24]/8 disabled:bg-white disabled:text-[#101A24]/30 disabled:shadow-none disabled:hover:-translate-x-1/2 disabled:hover:-translate-y-1/2 disabled:hover:scale-100 disabled:hover:bg-white sm:left-[3%] sm:h-12 sm:w-12"
+            className="absolute left-6 top-1/2 z-20 inline-flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-[#101A24]/18 bg-white text-[#101A24] shadow-[0_12px_26px_rgba(6,14,24,0.12)] transition-all duration-300 hover:-translate-y-1/2 hover:scale-[1.04] hover:bg-white active:scale-[0.98] disabled:cursor-not-allowed disabled:border-[#101A24]/8 disabled:bg-white disabled:text-[#101A24]/30 disabled:shadow-none disabled:hover:-translate-y-1/2 disabled:hover:scale-100 disabled:hover:bg-white sm:left-[3%] sm:h-12 sm:w-12 sm:-translate-x-1/2 sm:hover:-translate-x-[56%] sm:disabled:hover:-translate-x-1/2"
             disabled={!canScrollPrev}
             onClick={() => setActiveIndex((currentIndex) => Math.max(currentIndex - 1, 0))}
             type="button"
@@ -692,7 +694,7 @@ export function ServicesSection() {
 
           <button
             aria-label="Next services"
-            className="absolute right-[5%] top-1/2 z-20 inline-flex h-10 w-10 translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-[#101A24]/18 bg-white text-[#101A24] shadow-[0_12px_26px_rgba(6,14,24,0.12)] transition-all duration-300 hover:translate-x-[56%] hover:-translate-y-1/2 hover:scale-[1.04] hover:bg-white active:scale-[0.98] disabled:cursor-not-allowed disabled:border-[#101A24]/8 disabled:bg-white disabled:text-[#101A24]/30 disabled:shadow-none disabled:hover:translate-x-1/2 disabled:hover:-translate-y-1/2 disabled:hover:scale-100 disabled:hover:bg-white sm:right-[3%] sm:h-12 sm:w-12"
+            className="absolute right-6 top-1/2 z-20 inline-flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-[#101A24]/18 bg-white text-[#101A24] shadow-[0_12px_26px_rgba(6,14,24,0.12)] transition-all duration-300 hover:-translate-y-1/2 hover:scale-[1.04] hover:bg-white active:scale-[0.98] disabled:cursor-not-allowed disabled:border-[#101A24]/8 disabled:bg-white disabled:text-[#101A24]/30 disabled:shadow-none disabled:hover:-translate-y-1/2 disabled:hover:scale-100 disabled:hover:bg-white sm:right-[3%] sm:h-12 sm:w-12 sm:translate-x-1/2 sm:hover:translate-x-[56%] sm:disabled:hover:translate-x-1/2"
             disabled={!canScrollNext}
             onClick={() => setActiveIndex((currentIndex) => Math.min(currentIndex + 1, maxIndex))}
             type="button"
@@ -724,7 +726,7 @@ export function ServicesSection() {
 
         <div className="mt-10 flex justify-center px-5 sm:mt-12 sm:px-8 lg:px-10 xl:px-12">
           <a
-            className="inline-flex items-center justify-center gap-3 rounded-[5px] border border-[#101A24] bg-white px-8 py-4 text-sm font-medium text-[#101A24] transition-transform duration-300 hover:-translate-y-0.5 hover:bg-[#F2F4F6]"
+            className="inline-flex items-center justify-center gap-3 rounded-[5px] border border-[#101A24] bg-white px-8 py-4 text-sm font-medium text-[#101A24] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#101A24] hover:text-white"
             href="#contact"
           >
             Կապ մեզ հետ

@@ -131,7 +131,7 @@ export default function Home() {
             </div>
 
             <AutoFlipCard className="mx-auto w-full max-w-[420px] sm:max-w-[520px]">
-              <div className="flip-card-inner relative aspect-[1.12] w-full">
+              <div className="flip-card-inner relative min-h-[430px] w-full sm:aspect-[1.12] sm:min-h-0">
                 <div className="flip-card-face absolute inset-0 overflow-hidden rounded-[28px]">
                   <ResponsiveImage
                     alt="AirWash drone cleaning showcase"
@@ -143,21 +143,21 @@ export default function Home() {
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,17,29,0.06)_0%,rgba(5,17,29,0.2)_100%)]" />
                 </div>
 
-                <div className="flip-card-face flip-card-back absolute inset-0 flex flex-col justify-end overflow-hidden rounded-[28px] bg-[#101A24] p-8 text-white sm:p-10">
-                  <div className="max-w-[300px]">
-                    <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/56">
+                <div className="flip-card-face flip-card-back absolute inset-0 flex flex-col justify-end overflow-hidden rounded-[28px] bg-[#101A24] p-6 text-white sm:p-10">
+                  <div className="max-w-[300px] min-w-0">
+                    <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-white/56 sm:text-sm">
                       AirWash
                     </p>
-                    <h3 className="mt-4 max-w-[260px] text-[28px] font-bold leading-[1.15] sm:text-[31px]">
+                    <h3 className="mt-3 max-w-[260px] break-words text-[24px] font-bold leading-[1.16] sm:mt-4 sm:text-[31px]">
                       <span className="block">Ցանկանո՞ւմ ես</span>
-                      <span className="block whitespace-nowrap">օգտվել AirWash-ից?</span>
+                      <span className="block sm:whitespace-nowrap">օգտվել AirWash-ից?</span>
                     </h3>
-                    <p className="mt-4 text-base leading-8 text-white/76">
+                    <p className="mt-3 text-[14px] leading-7 text-white/76 sm:mt-4 sm:text-base sm:leading-8">
                       Կապ հաստատիր մեզ հետ, և մենք կօգնենք ընտրել քո օբյեկտի համար ամենաարդյունավետ drone մաքրման
                       լուծումը։
                     </p>
                     <a
-                      className="mt-8 inline-flex items-center justify-center rounded-[5px] border border-white px-6 py-3 text-sm font-medium text-white transition-transform duration-300 hover:-translate-y-0.5"
+                      className="mt-6 inline-flex items-center justify-center rounded-[5px] border border-white px-6 py-3 text-sm font-medium text-white transition-transform duration-300 hover:-translate-y-0.5 sm:mt-8"
                       href="#contact"
                     >
                       Կապ մեզ հետ
