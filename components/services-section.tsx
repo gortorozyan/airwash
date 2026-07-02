@@ -248,10 +248,12 @@ function ServiceCard({
 
 function PackageCard({
   card,
-  onOpen
+  onOpen,
+  width
 }: {
   card: PackageCardItem;
   onOpen: (card: PackageCardItem) => void;
+  width?: number;
 }) {
   const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
     if (event.key !== "Enter" && event.key !== " ") {
@@ -265,10 +267,13 @@ function PackageCard({
   return (
     <article
       aria-label={card.title}
-      className="min-w-0 cursor-pointer overflow-hidden rounded-[5px] bg-[#101A24] shadow-[0_24px_52px_rgba(6,14,24,0.18)] transition-shadow duration-300 hover:shadow-[0_30px_70px_rgba(6,14,24,0.2)]"
+      className={`relative min-w-0 cursor-pointer overflow-hidden rounded-[5px] bg-[#101A24] shadow-[0_24px_52px_rgba(6,14,24,0.18)] transition-shadow duration-300 hover:shadow-[0_30px_70px_rgba(6,14,24,0.2)] ${
+        width !== undefined ? "flex-none" : ""
+      }`}
       onClick={() => onOpen(card)}
       onKeyDown={handleKeyDown}
       role="button"
+      style={width !== undefined ? { width: `${width}px` } : undefined}
       tabIndex={0}
     >
       <div className="relative min-h-[190px] sm:min-h-[220px]">
@@ -479,6 +484,7 @@ function ContactSection() {
 export function ServicesSection() {
   const firstCardRef = useRef<HTMLElement | null>(null);
   const viewportRef = useRef<HTMLDivElement | null>(null);
+  const packageViewportRef = useRef<HTMLDivElement | null>(null);
   const modalCloseTimeoutRef = useRef<number | null>(null);
   const packageModalCloseTimeoutRef = useRef<number | null>(null);
   const [cardsPerView, setCardsPerView] = useState(3);
@@ -486,6 +492,10 @@ export function ServicesSection() {
   const [cardWidth, setCardWidth] = useState(0);
   const [stepWidth, setStepWidth] = useState(0);
   const [edgeOffset, setEdgeOffset] = useState(0);
+  const [packageActiveIndex, setPackageActiveIndex] = useState(0);
+  const [packageCardWidth, setPackageCardWidth] = useState(0);
+  const [packageStepWidth, setPackageStepWidth] = useState(0);
+  const [packageEdgeOffset, setPackageEdgeOffset] = useState(0);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [selectedPackage, setSelectedPackage] = useState<PackageCardItem | null>(null);
   const [isModalClosing, setIsModalClosing] = useState(false);
@@ -574,10 +584,9 @@ export function ServicesSection() {
 
   useEffect(() => {
     const measureCards = () => {
-      const firstCard = firstCardRef.current;
       const viewport = viewportRef.current;
 
-      if (!firstCard || !viewport) {
+      if (!viewport) {
         return;
       }
 
@@ -596,9 +605,9 @@ export function ServicesSection() {
 
     measureCards();
 
-    const firstCard = firstCardRef.current;
+    const viewport = viewportRef.current;
 
-    if (!firstCard || typeof ResizeObserver === "undefined") {
+    if (!viewport || typeof ResizeObserver === "undefined") {
       return;
     }
 
@@ -606,18 +615,66 @@ export function ServicesSection() {
       measureCards();
     });
 
-    observer.observe(firstCard);
+    observer.observe(viewport);
 
     return () => observer.disconnect();
   }, [cardsPerView]);
 
+  useEffect(() => {
+    const measurePackageCards = () => {
+      const viewport = packageViewportRef.current;
+
+      if (!viewport) {
+        return;
+      }
+
+      const viewportWidth = viewport.getBoundingClientRect().width;
+
+      if (viewportWidth <= 0) {
+        return;
+      }
+
+      const nextEdgeOffset = MOBILE_CARD_GUTTER;
+      const nextCardWidth = viewportWidth - (nextEdgeOffset * 2);
+
+      setPackageCardWidth(nextCardWidth);
+      setPackageStepWidth(nextCardWidth + CARD_GAP);
+      setPackageEdgeOffset(nextEdgeOffset);
+    };
+
+    measurePackageCards();
+    window.addEventListener("resize", measurePackageCards);
+
+    const viewport = packageViewportRef.current;
+
+    if (!viewport || typeof ResizeObserver === "undefined") {
+      return () => window.removeEventListener("resize", measurePackageCards);
+    }
+
+    const observer = new ResizeObserver(() => {
+      measurePackageCards();
+    });
+
+    observer.observe(viewport);
+
+    return () => {
+      window.removeEventListener("resize", measurePackageCards);
+      observer.disconnect();
+    };
+  }, []);
+
   const maxIndex = Math.max(services.length - cardsPerView, 0);
+  const packageMaxIndex = Math.max(packageCards.length - 1, 0);
   const canScrollPrev = activeIndex > 0;
   const canScrollNext = activeIndex < maxIndex;
 
   useEffect(() => {
     setActiveIndex((currentIndex) => Math.min(currentIndex, maxIndex));
   }, [maxIndex]);
+
+  useEffect(() => {
+    setPackageActiveIndex((currentIndex) => Math.min(currentIndex, packageMaxIndex));
+  }, [packageMaxIndex]);
 
   useEffect(() => {
     if (maxIndex <= 0) {
@@ -630,6 +687,18 @@ export function ServicesSection() {
 
     return () => window.clearInterval(intervalId);
   }, [maxIndex]);
+
+  useEffect(() => {
+    if (cardsPerView !== 1 || packageMaxIndex <= 0) {
+      return;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setPackageActiveIndex((currentIndex) => (currentIndex >= packageMaxIndex ? 0 : currentIndex + 1));
+    }, 2000);
+
+    return () => window.clearInterval(intervalId);
+  }, [cardsPerView, packageMaxIndex]);
 
   useEffect(() => {
     if (!selectedService && !selectedPackage) {
@@ -659,9 +728,14 @@ export function ServicesSection() {
   }, [closePackageModal, closeServiceModal, selectedPackage, selectedService]);
 
   const currentTranslate = activeIndex * stepWidth;
+  const packageCurrentTranslate = packageActiveIndex * packageStepWidth;
 
   const trackStyle = {
     transform: `translate3d(-${currentTranslate}px, 0, 0)`
+  };
+
+  const packageTrackStyle = {
+    transform: `translate3d(-${packageCurrentTranslate}px, 0, 0)`
   };
 
   return (
@@ -684,7 +758,7 @@ export function ServicesSection() {
         <div className="relative mt-10 w-full sm:mt-14">
           <button
             aria-label="Previous services"
-            className="absolute left-6 top-1/2 z-20 inline-flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-[#101A24]/18 bg-white text-[#101A24] shadow-[0_12px_26px_rgba(6,14,24,0.12)] transition-all duration-300 hover:-translate-y-1/2 hover:scale-[1.04] hover:bg-white active:scale-[0.98] disabled:cursor-not-allowed disabled:border-[#101A24]/8 disabled:bg-white disabled:text-[#101A24]/30 disabled:shadow-none disabled:hover:-translate-y-1/2 disabled:hover:scale-100 disabled:hover:bg-white sm:left-[3%] sm:h-12 sm:w-12 sm:-translate-x-1/2 sm:hover:-translate-x-[56%] sm:disabled:hover:-translate-x-1/2"
+            className="absolute left-6 top-1/2 z-20 hidden h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-[#101A24]/18 bg-white text-[#101A24] shadow-[0_12px_26px_rgba(6,14,24,0.12)] transition-all duration-300 hover:-translate-y-1/2 hover:scale-[1.04] hover:bg-white active:scale-[0.98] disabled:cursor-not-allowed disabled:border-[#101A24]/8 disabled:bg-white disabled:text-[#101A24]/30 disabled:shadow-none disabled:hover:-translate-y-1/2 disabled:hover:scale-100 disabled:hover:bg-white sm:left-[3%] sm:h-12 sm:w-12 sm:-translate-x-1/2 sm:hover:-translate-x-[56%] sm:disabled:hover:-translate-x-1/2 md:inline-flex"
             disabled={!canScrollPrev}
             onClick={() => setActiveIndex((currentIndex) => Math.max(currentIndex - 1, 0))}
             type="button"
@@ -694,7 +768,7 @@ export function ServicesSection() {
 
           <button
             aria-label="Next services"
-            className="absolute right-6 top-1/2 z-20 inline-flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-[#101A24]/18 bg-white text-[#101A24] shadow-[0_12px_26px_rgba(6,14,24,0.12)] transition-all duration-300 hover:-translate-y-1/2 hover:scale-[1.04] hover:bg-white active:scale-[0.98] disabled:cursor-not-allowed disabled:border-[#101A24]/8 disabled:bg-white disabled:text-[#101A24]/30 disabled:shadow-none disabled:hover:-translate-y-1/2 disabled:hover:scale-100 disabled:hover:bg-white sm:right-[3%] sm:h-12 sm:w-12 sm:translate-x-1/2 sm:hover:translate-x-[56%] sm:disabled:hover:translate-x-1/2"
+            className="absolute right-6 top-1/2 z-20 hidden h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-[#101A24]/18 bg-white text-[#101A24] shadow-[0_12px_26px_rgba(6,14,24,0.12)] transition-all duration-300 hover:-translate-y-1/2 hover:scale-[1.04] hover:bg-white active:scale-[0.98] disabled:cursor-not-allowed disabled:border-[#101A24]/8 disabled:bg-white disabled:text-[#101A24]/30 disabled:shadow-none disabled:hover:-translate-y-1/2 disabled:hover:scale-100 disabled:hover:bg-white sm:right-[3%] sm:h-12 sm:w-12 sm:translate-x-1/2 sm:hover:translate-x-[56%] sm:disabled:hover:translate-x-1/2 md:inline-flex"
             disabled={!canScrollNext}
             onClick={() => setActiveIndex((currentIndex) => Math.min(currentIndex + 1, maxIndex))}
             type="button"
@@ -766,7 +840,27 @@ export function ServicesSection() {
             </p>
           </div>
 
-          <div className="mt-10 grid gap-5 sm:mt-14 md:grid-cols-2 md:gap-7 xl:grid-cols-4">
+          <div className="-mx-5 mt-10 overflow-x-hidden bg-white sm:-mx-8 sm:mt-14 md:hidden" ref={packageViewportRef}>
+            <div
+              className="flex transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              style={packageTrackStyle}
+            >
+              <div aria-hidden="true" className="shrink-0" style={{ width: `${packageEdgeOffset}px` }} />
+              <div className="flex gap-6">
+                {packageCards.map((card) => (
+                  <PackageCard
+                    card={card}
+                    key={card.title}
+                    onOpen={openPackageModal}
+                    width={packageCardWidth}
+                  />
+                ))}
+              </div>
+              <div aria-hidden="true" className="shrink-0" style={{ width: `${packageEdgeOffset}px` }} />
+            </div>
+          </div>
+
+          <div className="mt-10 hidden gap-5 sm:mt-14 md:grid md:grid-cols-2 md:gap-7 xl:grid-cols-4">
             {packageCards.map((card) => (
               <PackageCard card={card} key={card.title} onOpen={openPackageModal} />
             ))}
